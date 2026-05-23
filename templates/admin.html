@@ -249,6 +249,38 @@
                 </div>
 
                 <div class="form-group">
+                    <label>Категории цветов *</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem;">
+                        <label style="font-weight: normal;"><input type="checkbox" name="category_bouquets" checked> 🌸 Букеты цветов</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="category_baskets" checked> 🧺 Цветы в корзинках</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="category_live" checked> 🌿 Живые цветы</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="category_roses" checked> 🌹 Розы</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="category_tulips" checked> 🌷 Тюльпаны</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="category_violets" checked> 🌺 Фиалки</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Кому дарить *</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem;">
+                        <label style="font-weight: normal;"><input type="checkbox" name="gift_grandma" checked> 👵 Бабушке</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="gift_girlfriend" checked> 💕 Девушке</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="gift_wife" checked> 💍 Жене</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="gift_mom" checked> 🤱 Маме</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Праздник *</label>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.5rem; margin-top: 0.5rem;">
+                        <label style="font-weight: normal;"><input type="checkbox" name="holiday_march8" checked> 🎉 8 марта</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="holiday_feb14" checked> 💘 14 февраля</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="holiday_cheer" checked> ✨ Порадовать</label>
+                        <label style="font-weight: normal;"><input type="checkbox" name="holiday_just" checked> 🌼 Просто так</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <label for="image">Фотография букета</label>
                     <input type="file" id="image" name="image" accept="image/png,image/jpeg,image/gif,image/webp">
                     <small style="color: #666; display: block; margin-top: 0.5rem;">Поддерживаемые форматы: PNG, JPG, GIF, WEBP (макс. 16MB)</small>
@@ -280,7 +312,9 @@
                         <th>Фото</th>
                         <th>Название</th>
                         <th>Цена</th>
-                        <th>Описание</th>
+                        <th>Категории</th>
+                        <th>Кому</th>
+                        <th>Праздник</th>
                         <th>Действия</th>
                     </tr>
                 </thead>
@@ -298,7 +332,26 @@
                         </td>
                         <td>{{ bouquet.name }}</td>
                         <td><strong>{{ bouquet.price }} ₽</strong></td>
-                        <td>{{ bouquet.description[:50] }}{% if bouquet.description and bouquet.description|length > 50 %}...{% endif %}</td>
+                        <td style="font-size: 0.85rem;">
+                            {% if bouquet.category_bouquets %}💐{% endif %}
+                            {% if bouquet.category_baskets %}🧺{% endif %}
+                            {% if bouquet.category_live %}🌿{% endif %}
+                            {% if bouquet.category_roses %}🌹{% endif %}
+                            {% if bouquet.category_tulips %}🌷{% endif %}
+                            {% if bouquet.category_violets %}🌺{% endif %}
+                        </td>
+                        <td style="font-size: 0.85rem;">
+                            {% if bouquet.gift_grandma %}👵{% endif %}
+                            {% if bouquet.gift_girlfriend %}💕{% endif %}
+                            {% if bouquet.gift_wife %}💍{% endif %}
+                            {% if bouquet.gift_mom %}🤱{% endif %}
+                        </td>
+                        <td style="font-size: 0.85rem;">
+                            {% if bouquet.holiday_march8 %}🎉{% endif %}
+                            {% if bouquet.holiday_feb14 %}💘{% endif %}
+                            {% if bouquet.holiday_cheer %}✨{% endif %}
+                            {% if bouquet.holiday_just %}🌼{% endif %}
+                        </td>
                         <td>
                             <a href="/delete/{{ bouquet.id }}" class="btn-delete" onclick="return confirm('Вы уверены, что хотите удалить этот букет?')">🗑️ Удалить</a>
                         </td>
@@ -315,7 +368,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 Цветочный магазин "Флора". Все права защищены.</p>
+        <p>&copy; 2024 Цветочный магазин "Эка цветы". Все права защищены.</p>
         <p style="margin-top: 0.5rem;"><a href="/logout" style="color: white; text-decoration: underline;">Выйти из админ-панели</a></p>
     </footer>
 </body>

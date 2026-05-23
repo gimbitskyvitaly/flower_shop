@@ -32,6 +32,26 @@ def create_app():
         price = db.Column(db.Float, nullable=False)
         description = db.Column(db.Text, nullable=True)
         image_file = db.Column(db.String(200), nullable=True)  # Имя файла изображения
+        
+        # Категории (виды цветов/букетов)
+        category_bouquets = db.Column(db.Boolean, default=True)  # Букеты цветов
+        category_baskets = db.Column(db.Boolean, default=True)   # Цветы в корзинках
+        category_live = db.Column(db.Boolean, default=True)      # Живые цветы
+        category_roses = db.Column(db.Boolean, default=True)     # Розы
+        category_tulips = db.Column(db.Boolean, default=True)    # Тюльпаны
+        category_violets = db.Column(db.Boolean, default=True)   # Фиалки
+        
+        # Кому дарить
+        gift_grandma = db.Column(db.Boolean, default=True)    # Бабушке
+        gift_girlfriend = db.Column(db.Boolean, default=True) # Девушке
+        gift_wife = db.Column(db.Boolean, default=True)       # Жене
+        gift_mom = db.Column(db.Boolean, default=True)        # Маме
+        
+        # Праздники
+        holiday_march8 = db.Column(db.Boolean, default=True)      # 8 марта
+        holiday_feb14 = db.Column(db.Boolean, default=True)       # 14 февраля
+        holiday_cheer = db.Column(db.Boolean, default=True)       # Порадовать
+        holiday_just = db.Column(db.Boolean, default=True)        # Просто так
 
         def __repr__(self):
             return f'<Bouquet {self.name}>'
@@ -47,8 +67,45 @@ def create_app():
     # Главная страница - каталог
     @app.route('/')
     def index():
-        bouquets = Bouquet.query.all()
-        return render_template('index.html', bouquets=bouquets)
+        # Получаем параметры фильтрации из URL
+        category_filter = request.args.get('category')  # фильтр по категории
+        price_min = request.args.get('price_min', type=float)  # минимальная цена
+        price_max = request.args.get('price_max', type=float)  # максимальная цена
+        gift_filter = request.args.get('gift')  # кому дарить
+        holiday_filter = request.args.get('holiday')  # праздник
+        
+        # Базовый запрос
+        query = Bouquet.query
+        
+        # Применяем фильтры
+        if category_filter:
+            category_column = f'category_{category_filter}'
+            if hasattr(Bouquet, category_column):
+                query = query.filter(getattr(Bouquet, category_column) == True)
+        
+        if price_min is not None:
+            query = query.filter(Bouquet.price >= price_min)
+        
+        if price_max is not None:
+            query = query.filter(Bouquet.price <= price_max)
+        
+        if gift_filter:
+            gift_column = f'gift_{gift_filter}'
+            if hasattr(Bouquet, gift_column):
+                query = query.filter(getattr(Bouquet, gift_column) == True)
+        
+        if holiday_filter:
+            holiday_column = f'holiday_{holiday_filter}'
+            if hasattr(Bouquet, holiday_column):
+                query = query.filter(getattr(Bouquet, holiday_column) == True)
+        
+        bouquets = query.all()
+        return render_template('index.html', bouquets=bouquets, 
+                             active_category=category_filter,
+                             active_gift=gift_filter,
+                             active_holiday=holiday_filter,
+                             price_min=price_min,
+                             price_max=price_max)
 
     # Страница входа для администратора
     @app.route('/login', methods=['GET', 'POST'])
@@ -107,7 +164,46 @@ def create_app():
         if name and price:
             try:
                 price = float(price)
-                bouquet = Bouquet(name=name, price=price, description=description, image_file=image_file)
+                # Получаем значения чекбоксов категорий
+                category_bouquets = request.form.get('category_bouquets') == 'on'
+                category_baskets = request.form.get('category_baskets') == 'on'
+                category_live = request.form.get('category_live') == 'on'
+                category_roses = request.form.get('category_roses') == 'on'
+                category_tulips = request.form.get('category_tulips') == 'on'
+                category_violets = request.form.get('category_violets') == 'on'
+                
+                # Получаем значения чекбоксов "кому дарить"
+                gift_grandma = request.form.get('gift_grandma') == 'on'
+                gift_girlfriend = request.form.get('gift_girlfriend') == 'on'
+                gift_wife = request.form.get('gift_wife') == 'on'
+                gift_mom = request.form.get('gift_mom') == 'on'
+                
+                # Получаем значения чекбоксов праздников
+                holiday_march8 = request.form.get('holiday_march8') == 'on'
+                holiday_feb14 = request.form.get('holiday_feb14') == 'on'
+                holiday_cheer = request.form.get('holiday_cheer') == 'on'
+                holiday_just = request.form.get('holiday_just') == 'on'
+                
+                bouquet = Bouquet(
+                    name=name, 
+                    price=price, 
+                    description=description, 
+                    image_file=image_file,
+                    category_bouquets=category_bouquets,
+                    category_baskets=category_baskets,
+                    category_live=category_live,
+                    category_roses=category_roses,
+                    category_tulips=category_tulips,
+                    category_violets=category_violets,
+                    gift_grandma=gift_grandma,
+                    gift_girlfriend=gift_girlfriend,
+                    gift_wife=gift_wife,
+                    gift_mom=gift_mom,
+                    holiday_march8=holiday_march8,
+                    holiday_feb14=holiday_feb14,
+                    holiday_cheer=holiday_cheer,
+                    holiday_just=holiday_just
+                )
                 db.session.add(bouquet)
                 db.session.commit()
                 flash('Букет успешно добавлен!', 'success')
