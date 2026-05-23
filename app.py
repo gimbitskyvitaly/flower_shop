@@ -149,6 +149,28 @@ def create_app():
             }
             return names.get(cat, cat)
         
+        def get_category_icon(cat):
+            icons = {
+                'bouquets': '💐',
+                'baskets': '🧺',
+                'live': '🌿',
+                'roses': '🌹',
+                'tulips': '🌷',
+                'peonies': '🌺',
+                'carnations': '🎀',
+                'chrysanthemums': '🌼',
+                'lilies': '🪷',
+                'orchids': '🦋',
+                'daisies': '🌻',
+                'eustoma': '🌸',
+                'alstroemeria': '🌺',
+                'gerberas': '🌻',
+                'irises': '⚜️',
+                'narcissus': '🌼',
+                'mixed': '💐🌿🌾'
+            }
+            return icons.get(cat, '🌸')
+        
         def get_gift_name(gift):
             names = {
                 'grandma': 'Бабушке',
