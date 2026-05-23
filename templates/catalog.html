@@ -976,6 +976,13 @@
             checkbox.checked = !checkbox.checked;
             document.getElementById('filterForm').submit();
         }
+
+        // Prevent event bubbling to avoid conflicts
+        document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+        });
     </script>
 </body>
 </html>
