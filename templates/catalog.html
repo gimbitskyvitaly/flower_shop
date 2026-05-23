@@ -210,14 +210,12 @@
             height: 18px;
             accent-color: var(--primary-color);
             cursor: pointer;
-            pointer-events: none;
         }
 
         .filter-option label {
             cursor: pointer;
             flex: 1;
             font-size: 0.95rem;
-            pointer-events: none;
         }
 
         .price-inputs {
@@ -743,77 +741,77 @@
                     <!-- Categories -->
                     <div class="filter-section">
                         <h3>🌸 Категории</h3>
-                        <div class="filter-option" onclick="toggleCategory('cat_bouquets')">
-                            <input type="checkbox" id="cat_bouquets" name="category" value="bouquets" {% if active_category == 'bouquets' %}checked{% endif %}>
-                            <label for="cat_bouquets">Букеты цветов</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_bouquets" name="category" value="bouquets" {% if 'bouquets' in active_categories %}checked{% endif %}>
+                            <label for="cat_bouquets">💐 Букеты цветов</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_baskets')">
-                            <input type="checkbox" id="cat_baskets" name="category" value="baskets" {% if active_category == 'baskets' %}checked{% endif %}>
-                            <label for="cat_baskets">Цветы в корзинках</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_baskets" name="category" value="baskets" {% if 'baskets' in active_categories %}checked{% endif %}>
+                            <label for="cat_baskets">🧺 Цветы в корзинках</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_live')">
-                            <input type="checkbox" id="cat_live" name="category" value="live" {% if active_category == 'live' %}checked{% endif %}>
-                            <label for="cat_live">Живые цветы</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_live" name="category" value="live" {% if 'live' in active_categories %}checked{% endif %}>
+                            <label for="cat_live">🌿 Живые цветы</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_roses')">
-                            <input type="checkbox" id="cat_roses" name="category" value="roses" {% if active_category == 'roses' %}checked{% endif %}>
-                            <label for="cat_roses">Розы</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_roses" name="category" value="roses" {% if 'roses' in active_categories %}checked{% endif %}>
+                            <label for="cat_roses">🌹 Розы</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_tulips')">
-                            <input type="checkbox" id="cat_tulips" name="category" value="tulips" {% if active_category == 'tulips' %}checked{% endif %}>
-                            <label for="cat_tulips">Тюльпаны</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_tulips" name="category" value="tulips" {% if 'tulips' in active_categories %}checked{% endif %}>
+                            <label for="cat_tulips">🌷 Тюльпаны</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_violets')">
-                            <input type="checkbox" id="cat_violets" name="category" value="violets" {% if active_category == 'violets' %}checked{% endif %}>
-                            <label for="cat_violets">Фиалки</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_violets" name="category" value="violets" {% if 'violets' in active_categories %}checked{% endif %}>
+                            <label for="cat_violets">🟣 Фиалки</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_peonies')">
-                            <input type="checkbox" id="cat_peonies" name="category" value="peonies" {% if active_category == 'peonies' %}checked{% endif %}>
-                            <label for="cat_peonies">Пионы</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_peonies" name="category" value="peonies" {% if 'peonies' in active_categories %}checked{% endif %}>
+                            <label for="cat_peonies">🌺 Пионы</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_carnations')">
-                            <input type="checkbox" id="cat_carnations" name="category" value="carnations" {% if active_category == 'carnations' %}checked{% endif %}>
-                            <label for="cat_carnations">Гвоздики</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_carnations" name="category" value="carnations" {% if 'carnations' in active_categories %}checked{% endif %}>
+                            <label for="cat_carnations">🎀 Гвоздики</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_chrysanthemums')">
-                            <input type="checkbox" id="cat_chrysanthemums" name="category" value="chrysanthemums" {% if active_category == 'chrysanthemums' %}checked{% endif %}>
-                            <label for="cat_chrysanthemums">Хризантемы</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_chrysanthemums" name="category" value="chrysanthemums" {% if 'chrysanthemums' in active_categories %}checked{% endif %}>
+                            <label for="cat_chrysanthemums">🌼 Хризантемы</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_lilies')">
-                            <input type="checkbox" id="cat_lilies" name="category" value="lilies" {% if active_category == 'lilies' %}checked{% endif %}>
-                            <label for="cat_lilies">Лилии</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_lilies" name="category" value="lilies" {% if 'lilies' in active_categories %}checked{% endif %}>
+                            <label for="cat_lilies">🪷 Лилии</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_orchids')">
-                            <input type="checkbox" id="cat_orchids" name="category" value="orchids" {% if active_category == 'orchids' %}checked{% endif %}>
-                            <label for="cat_orchids">Орхидеи</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_orchids" name="category" value="orchids" {% if 'orchids' in active_categories %}checked{% endif %}>
+                            <label for="cat_orchids">🦋 Орхидеи</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_daisies')">
-                            <input type="checkbox" id="cat_daisies" name="category" value="daisies" {% if active_category == 'daisies' %}checked{% endif %}>
-                            <label for="cat_daisies">Ромашки</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_daisies" name="category" value="daisies" {% if 'daisies' in active_categories %}checked{% endif %}>
+                            <label for="cat_daisies">🌻 Ромашки</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_eustoma')">
-                            <input type="checkbox" id="cat_eustoma" name="category" value="eustoma" {% if active_category == 'eustoma' %}checked{% endif %}>
-                            <label for="cat_eustoma">Эустомы</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_eustoma" name="category" value="eustoma" {% if 'eustoma' in active_categories %}checked{% endif %}>
+                            <label for="cat_eustoma">🌸 Эустомы</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_alstroemeria')">
-                            <input type="checkbox" id="cat_alstroemeria" name="category" value="alstroemeria" {% if active_category == 'alstroemeria' %}checked{% endif %}>
-                            <label for="cat_alstroemeria">Альстромерии</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_alstroemeria" name="category" value="alstroemeria" {% if 'alstroemeria' in active_categories %}checked{% endif %}>
+                            <label for="cat_alstroemeria">🌺 Альстромерии</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_gerberas')">
-                            <input type="checkbox" id="cat_gerberas" name="category" value="gerberas" {% if active_category == 'gerberas' %}checked{% endif %}>
-                            <label for="cat_gerberas">Герберы</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_gerberas" name="category" value="gerberas" {% if 'gerberas' in active_categories %}checked{% endif %}>
+                            <label for="cat_gerberas">🌻 Герберы</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_irises')">
-                            <input type="checkbox" id="cat_irises" name="category" value="irises" {% if active_category == 'irises' %}checked{% endif %}>
-                            <label for="cat_irises">Ирисы</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_irises" name="category" value="irises" {% if 'irises' in active_categories %}checked{% endif %}>
+                            <label for="cat_irises">💜 Ирисы</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_narcissus')">
-                            <input type="checkbox" id="cat_narcissus" name="category" value="narcissus" {% if active_category == 'narcissus' %}checked{% endif %}>
-                            <label for="cat_narcissus">Нарциссы</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_narcissus" name="category" value="narcissus" {% if 'narcissus' in active_categories %}checked{% endif %}>
+                            <label for="cat_narcissus">💛 Нарциссы</label>
                         </div>
-                        <div class="filter-option" onclick="toggleCategory('cat_mixed')">
-                            <input type="checkbox" id="cat_mixed" name="category" value="mixed" {% if active_category == 'mixed' %}checked{% endif %}>
-                            <label for="cat_mixed">Сборные букеты</label>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_mixed" name="category" value="mixed" {% if 'mixed' in active_categories %}checked{% endif %}>
+                            <label for="cat_mixed">🌈 Сборные букеты</label>
                         </div>
                     </div>
 
@@ -828,15 +826,15 @@
             <!-- Main Catalog Area -->
             <main class="catalog-main">
                 <!-- Active Filters Bar -->
-                {% if active_category or active_gift or active_holiday or price_min or price_max %}
+                {% if active_categories or active_gift or active_holiday or price_min or price_max %}
                 <div class="active-filters-bar">
                     <strong>Активные фильтры:</strong>
-                    {% if active_category %}
+                    {% for cat in active_categories %}
                     <span class="filter-tag">
-                        🌸 {{ get_category_name(active_category) }}
-                        <span class="remove-filter" onclick="removeFilter('category')">×</span>
+                        {{ get_category_icon(cat) }} {{ get_category_name(cat) }}
+                        <span class="remove-filter" onclick="removeFilter('category', '{{ cat }}')">×</span>
                     </span>
-                    {% endif %}
+                    {% endfor %}
                     {% if active_gift %}
                     <span class="filter-tag">
                         🎁 {{ get_gift_name(active_gift) }}
@@ -954,10 +952,16 @@
         });
 
         // Remove filter helper
-        function removeFilter(type) {
+        function removeFilter(type, value) {
             const url = new URL(window.location.href);
             if (type === 'category') {
+                const categories = url.searchParams.getAll('category');
                 url.searchParams.delete('category');
+                categories.forEach(cat => {
+                    if (cat !== value) {
+                        url.searchParams.append('category', cat);
+                    }
+                });
             } else if (type === 'gift') {
                 url.searchParams.delete('gift');
             } else if (type === 'holiday') {
@@ -970,12 +974,13 @@
             window.location.href = url.toString();
         }
 
-        // Toggle category checkbox and submit form
-        function toggleCategory(checkboxId) {
-            const checkbox = document.getElementById(checkboxId);
-            checkbox.checked = !checkbox.checked;
-            document.getElementById('filterForm').submit();
-        }
+        // Handle checkbox changes - just update state without auto-submit
+        document.querySelectorAll('input[name="category"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function(e) {
+                e.stopPropagation();
+                // Don't auto-submit, let user click Apply button
+            });
+        });
 
         // Prevent event bubbling to avoid conflicts
         document.querySelectorAll('.filter-option input[type="checkbox"]').forEach(cb => {
