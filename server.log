@@ -12,3 +12,7 @@ Press CTRL+C to quit
 127.0.0.1 - - [23/May/2026 20:31:37] "GET / HTTP/1.1" 200 -
 127.0.0.1 - - [23/May/2026 20:31:40] "GET /catalog?category=roses HTTP/1.1" 200 -
 127.0.0.1 - - [23/May/2026 20:31:43] "GET /catalog HTTP/1.1" 200 -
+ * Detected change in '/workspace/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 118-988-872

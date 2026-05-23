@@ -79,45 +79,9 @@ def create_app():
     # Главная страница - каталог
     @app.route('/')
     def index():
-        # Получаем параметры фильтрации из URL
-        category_filter = request.args.get('category')  # фильтр по категории
-        price_min = request.args.get('price_min', type=float)  # минимальная цена
-        price_max = request.args.get('price_max', type=float)  # максимальная цена
-        gift_filter = request.args.get('gift')  # кому дарить
-        holiday_filter = request.args.get('holiday')  # праздник
-        
-        # Базовый запрос
-        query = Bouquet.query
-        
-        # Применяем фильтры
-        if category_filter:
-            category_column = f'category_{category_filter}'
-            if hasattr(Bouquet, category_column):
-                query = query.filter(getattr(Bouquet, category_column) == True)
-        
-        if price_min is not None:
-            query = query.filter(Bouquet.price >= price_min)
-        
-        if price_max is not None:
-            query = query.filter(Bouquet.price <= price_max)
-        
-        if gift_filter:
-            gift_column = f'gift_{gift_filter}'
-            if hasattr(Bouquet, gift_column):
-                query = query.filter(getattr(Bouquet, gift_column) == True)
-        
-        if holiday_filter:
-            holiday_column = f'holiday_{holiday_filter}'
-            if hasattr(Bouquet, holiday_column):
-                query = query.filter(getattr(Bouquet, holiday_column) == True)
-        
-        bouquets = query.all()
-        return render_template('index.html', bouquets=bouquets, 
-                             active_category=category_filter,
-                             active_gift=gift_filter,
-                             active_holiday=holiday_filter,
-                             price_min=price_min,
-                             price_max=price_max)
+        # Показываем все букеты на главной без фильтрации
+        bouquets = Bouquet.query.all()
+        return render_template('index.html', bouquets=bouquets)
 
     # Страница каталога с фильтрами
     @app.route('/catalog')
