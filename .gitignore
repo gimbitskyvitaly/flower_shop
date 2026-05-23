@@ -1,4 +1,4 @@
 ```
-# Templates directory (if it contains only HTML files)
-templates/
+__pycache__/
+*.pyc
 ```

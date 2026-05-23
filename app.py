@@ -86,8 +86,8 @@ def create_app():
     # Страница каталога с фильтрами
     @app.route('/catalog')
     def catalog():
-        # Получаем параметры фильтрации из URL
-        category_filter = request.args.get('category')  # фильтр по категории
+        # Получаем параметры фильтрации из URL (множественные значения для категорий)
+        categories_filter = request.args.getlist('category')  # фильтр по категориям (список)
         price_min = request.args.get('price_min', type=float)  # минимальная цена
         price_max = request.args.get('price_max', type=float)  # максимальная цена
         gift_filter = request.args.get('gift')  # кому дарить
@@ -96,11 +96,16 @@ def create_app():
         # Базовый запрос
         query = Bouquet.query
         
-        # Применяем фильтры
-        if category_filter:
-            category_column = f'category_{category_filter}'
-            if hasattr(Bouquet, category_column):
-                query = query.filter(getattr(Bouquet, category_column) == True)
+        # Применяем фильтры по категориям (если выбрано несколько - используем OR логику внутри AND)
+        if categories_filter:
+            from sqlalchemy import or_
+            conditions = []
+            for cat in categories_filter:
+                category_column = f'category_{cat}'
+                if hasattr(Bouquet, category_column):
+                    conditions.append(getattr(Bouquet, category_column) == True)
+            if conditions:
+                query = query.filter(or_(*conditions))
         
         if price_min is not None:
             query = query.filter(Bouquet.price >= price_min)
@@ -163,7 +168,7 @@ def create_app():
             return names.get(holiday, holiday)
         
         return render_template('catalog.html', bouquets=bouquets, 
-                             active_category=category_filter,
+                             active_categories=categories_filter,
                              active_gift=gift_filter,
                              active_holiday=holiday_filter,
                              price_min=price_min,
