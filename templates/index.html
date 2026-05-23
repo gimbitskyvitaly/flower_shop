@@ -331,10 +331,10 @@
             const bouquetsData = [
                 {% for bouquet in bouquets %}
                 {
-                    name: "{{ bouquet.name | replace('"', '\\"') }}",
+                    name: {{ bouquet.name | tojson }},
                     price: {{ bouquet.price }},
-                    description: "{{ (bouquet.description or '') | replace('\n', '\\n') | replace('"', '\\"') }}",
-                    image_file: "{{ bouquet.image_file or '' }}"
+                    description: {{ (bouquet.description or '') | tojson }},
+                    image_file: {{ (bouquet.image_file or '') | tojson }}
                 }{% if not loop.last %},{% endif %}
                 {% endfor %}
             ];
