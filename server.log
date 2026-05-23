@@ -1,17 +1,18 @@
  * Serving Flask app 'app'
  * Debug mode: on
-[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
  * Running on all addresses (0.0.0.0)
  * Running on http://127.0.0.1:5001
- * Running on http://21.0.3.126:5001
-[33mPress CTRL+C to quit[0m
+ * Running on http://21.0.9.246:5001
+Press CTRL+C to quit
  * Restarting with stat
  * Debugger is active!
- * Debugger PIN: 915-159-055
-127.0.0.1 - - [23/May/2026 12:08:38] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [23/May/2026 12:08:41] "GET /login HTTP/1.1" 200 -
-127.0.0.1 - - [23/May/2026 12:09:16] "[32mGET /admin HTTP/1.1[0m" 302 -
-127.0.0.1 - - [23/May/2026 12:09:19] "[32mPOST /login HTTP/1.1[0m" 302 -
-127.0.0.1 - - [23/May/2026 12:09:19] "[31m[1mPOST /admin HTTP/1.1[0m" 405 -
-127.0.0.1 - - [23/May/2026 12:09:23] "[32mPOST /login HTTP/1.1[0m" 302 -
-127.0.0.1 - - [23/May/2026 12:09:23] "GET /admin HTTP/1.1" 200 -
+ * Debugger PIN: 118-988-872
+127.0.0.1 - - [23/May/2026 20:31:35] "GET /catalog HTTP/1.1" 200 -
+127.0.0.1 - - [23/May/2026 20:31:37] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [23/May/2026 20:31:40] "GET /catalog?category=roses HTTP/1.1" 200 -
+127.0.0.1 - - [23/May/2026 20:31:43] "GET /catalog HTTP/1.1" 200 -
+ * Detected change in '/workspace/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 118-988-872

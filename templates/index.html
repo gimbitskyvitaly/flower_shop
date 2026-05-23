@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Цветочный магазин "Флора"</title>
+    <title>Цветочный магазин "Эка цветы" - Букеты и цветы в Гале</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #6b5b95;
+            --secondary-color: #88b04b;
+            --accent-color: #f7cac9;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+            --border-radius: 16px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -12,88 +25,347 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-            min-height: 100vh;
+            font-family: 'Montserrat', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
         }
 
+        /* Header */
         header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            background: linear-gradient(135deg, var(--primary-color), #9a7fb5);
             color: white;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
         }
 
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+        .header-top .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .header-main {
+            padding: 1.5rem 0;
+        }
+
+        .header-main .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1.2;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            color: #666;
         }
 
         nav {
-            background: white;
-            padding: 1rem;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 2rem;
         }
 
         nav a {
-            color: #667eea;
+            color: var(--text-color);
             text-decoration: none;
-            margin: 0 1rem;
-            font-weight: bold;
+            font-weight: 600;
+            font-size: 1rem;
             transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
         }
 
         nav a:hover {
-            color: #764ba2;
+            color: var(--primary-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
         }
 
         .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 4rem 0;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Categories Section */
+        .categories-section {
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--text-color);
+            margin-bottom: 2rem;
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '🌸';
+            display: block;
+            font-size: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .category-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 2rem 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: var(--text-color);
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+        }
+
+        .category-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-color);
+        }
+
+        .category-card.active {
+            background: linear-gradient(135deg, var(--primary-color), #9a7fb5);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .category-icon {
+            font-size: 3.5rem;
+            display: block;
+            margin-bottom: 0.75rem;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.1);
+        }
+
+        .category-name {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .filter-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e8e8e8;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+            background: var(--white);
+        }
+
+        .filter-group select:focus,
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            justify-content: center;
+        }
+
+        .btn-filter {
+            background: linear-gradient(135deg, var(--primary-color), #9a7fb5);
+            color: white;
+            padding: 0.875rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            font-family: inherit;
+        }
+
+        .btn-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 91, 149, 0.4);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+        }
+
+        .active-filters {
+            background: #f0f0f0;
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .active-filters span:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .filter-tag {
+            background: linear-gradient(135deg, var(--primary-color), #9a7fb5);
+            color: white;
+            padding: 0.375rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Catalog */
         .catalog-title {
             text-align: center;
-            color: #333;
+            color: var(--text-color);
             margin-bottom: 2rem;
             font-size: 2rem;
+            font-weight: 700;
         }
 
         .bouquet-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
 
         .bouquet-card {
-            background: white;
-            border-radius: 15px;
+            background: var(--white);
+            border-radius: var(--border-radius);
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
             cursor: pointer;
             display: flex;
             flex-direction: column;
-            height: 450px;
+            height: 480px;
         }
 
         .bouquet-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
         }
 
         .bouquet-image {
             width: 100%;
-            height: 250px;
+            height: 280px;
             object-fit: cover;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             flex-shrink: 0;
@@ -108,17 +380,18 @@
         }
 
         .bouquet-name {
-            font-size: 1.3rem;
-            color: #333;
+            font-size: 1.4rem;
+            color: var(--text-color);
             margin-bottom: 0.5rem;
+            font-weight: 600;
             flex-shrink: 0;
         }
 
         .bouquet-price {
-            font-size: 1.5rem;
-            color: #667eea;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+            font-size: 1.6rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.75rem;
             flex-shrink: 0;
         }
 
@@ -133,17 +406,18 @@
             -webkit-box-orient: vertical;
         }
 
-        /* Modal styles */
+        /* Modal */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 2000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0,0,0,0.6);
+            background-color: rgba(0,0,0,0.7);
             animation: fadeIn 0.3s;
+            backdrop-filter: blur(5px);
         }
 
         .modal.show {
@@ -153,9 +427,9 @@
         }
 
         .modal-content {
-            background: white;
-            border-radius: 15px;
-            max-width: 600px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            max-width: 700px;
             width: 90%;
             max-height: 90vh;
             overflow-y: auto;
@@ -167,50 +441,52 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: #333;
             cursor: pointer;
             z-index: 10;
             transition: color 0.3s;
+            line-height: 1;
         }
 
         .modal-close:hover {
-            color: #667eea;
+            color: var(--primary-color);
         }
 
         .modal-image {
             width: 100%;
-            max-height: 350px;
+            max-height: 400px;
             object-fit: cover;
-            border-radius: 15px 15px 0 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
         }
 
         .modal-placeholder {
             width: 100%;
-            height: 350px;
+            height: 400px;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
+            font-size: 6rem;
             color: #999;
-            border-radius: 15px 15px 0 0;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
         }
 
         .modal-body {
-            padding: 2rem;
+            padding: 2.5rem;
         }
 
         .modal-name {
-            font-size: 2rem;
-            color: #333;
+            font-size: 2.2rem;
+            color: var(--text-color);
             margin-bottom: 1rem;
+            font-weight: 700;
         }
 
         .modal-price {
-            font-size: 2rem;
-            color: #667eea;
-            font-weight: bold;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            font-weight: 700;
             margin-bottom: 1.5rem;
         }
 
@@ -231,65 +507,251 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        /* Contact Section */
         .contact-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            background: var(--white);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
             margin-top: 2rem;
+            margin-bottom: 3rem;
         }
 
         .contact-section h2 {
-            color: #667eea;
-            margin-bottom: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
         }
 
         .contact-info {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
         }
 
         .contact-item {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--light-bg);
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateX(5px);
         }
 
         .contact-icon {
-            font-size: 1.5rem;
+            font-size: 2rem;
+            flex-shrink: 0;
         }
 
+        .contact-item strong {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: var(--text-color);
+        }
+
+        .contact-item a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--secondary-color);
+        }
+
+        /* Footer */
         footer {
-            background: #333;
+            background: linear-gradient(135deg, var(--primary-color), #9a7fb5);
             color: white;
             text-align: center;
-            padding: 1.5rem;
+            padding: 2rem;
             margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
         }
 
         .no-bouquets {
             text-align: center;
             color: #666;
-            font-size: 1.2rem;
-            padding: 3rem;
+            font-size: 1.3rem;
+            padding: 4rem 2rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-main .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+
+            .category-cards {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 1rem;
+            }
+
+            .category-icon {
+                font-size: 2.5rem;
+            }
+
+            .bouquet-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>🌸 Цветочный магазин "Флора"</h1>
-        <p>Лучшие букеты для ваших любимых</p>
+        <div class="header-top">
+            <div class="container">
+                <span>🌸 Свежие цветы каждый день</span>
+                <span>📞 +79407735214</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <a href="/" class="logo">
+                    <span class="logo-icon">🌺</span>
+                    <div class="logo-text">
+                        <h1>Эка цветы</h1>
+                        <p>Ваш любимый цветочный магазин</p>
+                    </div>
+                </a>
+                <nav>
+                    <a href="/">Главная</a>
+                    <a href="/catalog">Каталог</a>
+                    <a href="/#contacts">Контакты</a>
+                    <a href="/admin">Админ-панель</a>
+                </nav>
+            </div>
+        </div>
     </header>
 
-    <nav>
-        <a href="/">Главная</a>
-        <a href="/#catalog">Каталог</a>
-        <a href="/#contacts">Контакты</a>
-        <a href="/admin">Админ-панель</a>
-    </nav>
+    <div class="hero">
+        <div class="container">
+            <h2>🌹 Прекрасные букеты для ваших любимых</h2>
+            <p>Свежие цветы, авторские композиции и внимательный подход к каждому клиенту</p>
+        </div>
+    </div>
 
     <div class="container">
+        <!-- Category Cards Section -->
+        <div class="categories-section">
+            <h3 class="section-title">Категории цветов</h3>
+            <div class="category-cards">
+                <a href="/catalog?category=bouquets" class="category-card {% if active_category == 'bouquets' %}active{% endif %}">
+                    <span class="category-icon">💐</span>
+                    <span class="category-name">Букеты цветов</span>
+                </a>
+                <a href="/catalog?category=baskets" class="category-card {% if active_category == 'baskets' %}active{% endif %}">
+                    <span class="category-icon">🧺</span>
+                    <span class="category-name">Цветы в корзинках</span>
+                </a>
+                <a href="/catalog?category=live" class="category-card {% if active_category == 'live' %}active{% endif %}">
+                    <span class="category-icon">🌿</span>
+                    <span class="category-name">Живые цветы</span>
+                </a>
+                <a href="/catalog?category=roses" class="category-card {% if active_category == 'roses' %}active{% endif %}">
+                    <span class="category-icon">🌹</span>
+                    <span class="category-name">Розы</span>
+                </a>
+                <a href="/catalog?category=tulips" class="category-card {% if active_category == 'tulips' %}active{% endif %}">
+                    <span class="category-icon">🌷</span>
+                    <span class="category-name">Тюльпаны</span>
+                </a>
+                <a href="/catalog?category=violets" class="category-card {% if active_category == 'violets' %}active{% endif %}">
+                    <span class="category-icon">🌺</span>
+                    <span class="category-name">Фиалки</span>
+                </a>
+                <a href="/catalog?category=peonies" class="category-card {% if active_category == 'peonies' %}active{% endif %}">
+                    <span class="category-icon">🌸</span>
+                    <span class="category-name">Пионы</span>
+                </a>
+                <a href="/catalog?category=carnations" class="category-card {% if active_category == 'carnations' %}active{% endif %}">
+                    <span class="category-icon">🎀</span>
+                    <span class="category-name">Гвоздики</span>
+                </a>
+                <a href="/catalog?category=chrysanthemums" class="category-card {% if active_category == 'chrysanthemums' %}active{% endif %}">
+                    <span class="category-icon">🌼</span>
+                    <span class="category-name">Хризантемы</span>
+                </a>
+                <a href="/catalog?category=lilies" class="category-card {% if active_category == 'lilies' %}active{% endif %}">
+                    <span class="category-icon">🪷</span>
+                    <span class="category-name">Лилии</span>
+                </a>
+                <a href="/catalog?category=orchids" class="category-card {% if active_category == 'orchids' %}active{% endif %}">
+                    <span class="category-icon">🦋</span>
+                    <span class="category-name">Орхидеи</span>
+                </a>
+                <a href="/catalog?category=daisies" class="category-card {% if active_category == 'daisies' %}active{% endif %}">
+                    <span class="category-icon">🍃</span>
+                    <span class="category-name">Ромашки</span>
+                </a>
+                <a href="/catalog?category=eustoma" class="category-card {% if active_category == 'eustoma' %}active{% endif %}">
+                    <span class="category-icon">🌷</span>
+                    <span class="category-name">Эустомы</span>
+                </a>
+                <a href="/catalog?category=alstroemeria" class="category-card {% if active_category == 'alstroemeria' %}active{% endif %}">
+                    <span class="category-icon">🌻</span>
+                    <span class="category-name">Альстромерии</span>
+                </a>
+                <a href="/catalog?category=gerberas" class="category-card {% if active_category == 'gerberas' %}active{% endif %}">
+                    <span class="category-icon">🏵️</span>
+                    <span class="category-name">Герберы</span>
+                </a>
+                <a href="/catalog?category=irises" class="category-card {% if active_category == 'irises' %}active{% endif %}">
+                    <span class="category-icon">📿</span>
+                    <span class="category-name">Ирисы</span>
+                </a>
+                <a href="/catalog?category=narcissus" class="category-card {% if active_category == 'narcissus' %}active{% endif %}">
+                    <span class="category-icon">🌼</span>
+                    <span class="category-name">Нарциссы</span>
+                </a>
+                <a href="/catalog?category=mixed" class="category-card {% if active_category == 'mixed' %}active{% endif %}">
+                    <span class="category-icon">🎨</span>
+                    <span class="category-name">Сборные букеты</span>
+                </a>
+            </div>
+        </div>
+
         <h2 class="catalog-title" id="catalog">Наши букеты</h2>
 
         {% if bouquets %}
@@ -391,15 +853,15 @@
             <div class="contact-info">
                 <div class="contact-item">
                     <span class="contact-icon">📍</span>
-                    <span><strong>Адрес:</strong> ул. Цветочная, д. 15, Москва</span>
+                    <span><strong>Адрес:</strong> г. Гал, ул около стадиона</span>
                 </div>
                 <div class="contact-item">
                     <span class="contact-icon">📞</span>
-                    <span><strong>Телефон:</strong> +7 (495) 123-45-67</span>
+                    <span><strong>Телефон:</strong> +79407735214</span>
                 </div>
                 <div class="contact-item">
                     <span class="contact-icon">✉️</span>
-                    <span><strong>Email:</strong> info@flora-shop.ru</span>
+                    <span><strong>Instagram:</strong> <a href="https://www.instagram.com/ekaqobali23" target="_blank">@ekaqobali23</a></span>
                 </div>
                 <div class="contact-item">
                     <span class="contact-icon">⏰</span>
@@ -410,7 +872,7 @@
     </div>
 
     <footer>
-        <p>&copy; 2024 Цветочный магазин "Флора". Все права защищены.</p>
+        <p>&copy; 2024 Цветочный магазин "Эка цветы". Все права защищены.</p>
     </footer>
 </body>
 </html>
