@@ -2,69 +2,78 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 import os
 
-app = Flask(__name__)
+def create_app():
+    app = Flask(__name__)
+    
+    # Конфигурация базы данных
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'flowers.db')
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SECRET_KEY'] = 'flower-shop-secret-key'
+    
+    db = SQLAlchemy(app)
+    
+    # Модель букета
+    class Bouquet(db.Model):
+        id = db.Column(db.Integer, primary_key=True)
+        name = db.Column(db.String(100), nullable=False)
+        price = db.Column(db.Float, nullable=False)
+        description = db.Column(db.Text, nullable=True)
+        image_url = db.Column(db.String(500), nullable=True)
 
-# Конфигурация базы данных
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'flowers.db')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'flower-shop-secret-key'
+        def __repr__(self):
+            return f'<Bouquet {self.name}>'
 
-db = SQLAlchemy(app)
+    # Создание таблиц БД
+    with app.app_context():
+        db.create_all()
 
-# Модель букета
-class Bouquet(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
-    price = db.Column(db.Float, nullable=False)
-    description = db.Column(db.Text, nullable=True)
-    image_url = db.Column(db.String(500), nullable=True)
+    # Главная страница - каталог
+    @app.route('/')
+    def index():
+        bouquets = Bouquet.query.all()
+        return render_template('index.html', bouquets=bouquets)
 
-    def __repr__(self):
-        return f'<Bouquet {self.name}>'
+    # Страница администратора - управление каталогом
+    @app.route('/admin')
+    def admin():
+        bouquets = Bouquet.query.all()
+        return render_template('admin.html', bouquets=bouquets)
 
-# Создание таблиц БД
-with app.app_context():
-    db.create_all()
+    # Добавление букета
+    @app.route('/add', methods=['POST'])
+    def add_bouquet():
+        name = request.form.get('name')
+        price = request.form.get('price')
+        description = request.form.get('description')
+        image_url = request.form.get('image_url')
 
-# Главная страница - каталог
-@app.route('/')
-def index():
-    bouquets = Bouquet.query.all()
-    return render_template('index.html', bouquets=bouquets)
+        if name and price:
+            try:
+                price = float(price)
+                bouquet = Bouquet(name=name, price=price, description=description, image_url=image_url)
+                db.session.add(bouquet)
+                db.session.commit()
+            except ValueError:
+                pass
 
-# Страница администратора - управление каталогом
-@app.route('/admin')
-def admin():
-    bouquets = Bouquet.query.all()
-    return render_template('admin.html', bouquets=bouquets)
+        return redirect(url_for('admin'))
 
-# Добавление букета
-@app.route('/add', methods=['POST'])
-def add_bouquet():
-    name = request.form.get('name')
-    price = request.form.get('price')
-    description = request.form.get('description')
-    image_url = request.form.get('image_url')
+    # Удаление букета
+    @app.route('/delete/<int:id>')
+    def delete_bouquet(id):
+        bouquet = Bouquet.query.get_or_404(id)
+        db.session.delete(bouquet)
+        db.session.commit()
+        return redirect(url_for('admin'))
 
-    if name and price:
-        try:
-            price = float(price)
-            bouquet = Bouquet(name=name, price=price, description=description, image_url=image_url)
-            db.session.add(bouquet)
-            db.session.commit()
-        except ValueError:
-            pass
+    return app
 
-    return redirect(url_for('admin'))
+app = create_app()
 
-# Удаление букета
-@app.route('/delete/<int:id>')
-def delete_bouquet(id):
-    bouquet = Bouquet.query.get_or_404(id)
-    db.session.delete(bouquet)
-    db.session.commit()
-    return redirect(url_for('admin'))
+def main():
+    """Точка входа для запуска через uv run start"""
+    app.run(debug=True, host='0.0.0.0', port=5001)
 
 if __name__ == '__main__':
-    app.run(debug=True, host='0.0.0.0', port=5001)
+    main()

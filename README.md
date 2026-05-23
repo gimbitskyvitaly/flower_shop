@@ -19,16 +19,34 @@
 /workspace/
 ├── app.py              # Основной файл приложения Flask
 ├── flowers.db          # База данных SQLite
+├── pyproject.toml      # Конфигурация проекта и зависимости
+├── uv.lock             # Заблокированные версии зависимостей
 ├── templates/
 │   ├── index.html      # Главная страница (каталог для клиентов)
 │   └── admin.html      # Админ-панель (управление каталогом)
 └── static/             # Статические файлы (CSS, JS, изображения)
 ```
 
-## Запуск
+## Установка и запуск
+
+### С помощью uv (рекомендуется):
 
 ```bash
 cd /workspace
+uv sync          # Установить все зависимости автоматически
+uv run start     # Запустить сервер
+```
+
+Или просто:
+```bash
+uv run python app.py
+```
+
+### Классический способ:
+
+```bash
+cd /workspace
+pip install -r requirements.txt  # Если есть requirements.txt
 python app.py
 ```
 
@@ -48,8 +66,17 @@ python app.py
 
 ## Технологии
 
-- Python 3
+- Python 3.12+
+- uv (менеджер пакетов и проектов)
 - Flask (веб-фреймворк)
 - Flask-SQLAlchemy (ORM для работы с БД)
 - SQLite (база данных)
 - HTML5 + CSS3
+
+## Управление зависимостями
+
+Все зависимости управляются через `pyproject.toml` и `uv`:
+
+- Добавить новую зависимость: `uv add <package-name>`
+- Удалить зависимость: `uv remove <package-name>`
+- Синхронизировать зависимости: `uv sync`
