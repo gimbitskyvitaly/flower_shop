@@ -182,8 +182,8 @@
         <div class="bouquet-grid">
             {% for bouquet in bouquets %}
             <div class="bouquet-card">
-                {% if bouquet.image_url %}
-                <img src="{{ bouquet.image_url }}" alt="{{ bouquet.name }}" class="bouquet-image">
+                {% if bouquet.image_file %}
+                <img src="{{ url_for('static', filename='uploads/' + bouquet.image_file) }}" alt="{{ bouquet.name }}" class="bouquet-image">
                 {% else %}
                 <div class="bouquet-image" style="display: flex; align-items: center; justify-content: center; color: #999; font-size: 3rem;">
                     🌺

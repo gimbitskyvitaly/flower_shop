@@ -231,7 +231,8 @@
         <h2 class="admin-title">Добавить новый букет</h2>
 
         <div class="add-form-section">
-            <form action="/add" method="POST">
+            <h2>Добавить новый букет</h2>
+            <form action="/add" method="POST" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="name">Название букета *</label>
                     <input type="text" id="name" name="name" required placeholder="Например: Розовый рай">
@@ -248,8 +249,9 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="image_url">URL изображения (необязательно)</label>
-                    <input type="url" id="image_url" name="image_url" placeholder="https://example.com/image.jpg">
+                    <label for="image">Фотография букета</label>
+                    <input type="file" id="image" name="image" accept="image/png,image/jpeg,image/gif,image/webp">
+                    <small style="color: #666; display: block; margin-top: 0.5rem;">Поддерживаемые форматы: PNG, JPG, GIF, WEBP (макс. 16MB)</small>
                 </div>
 
                 <button type="submit" class="btn-add">➕ Добавить букет</button>
@@ -258,6 +260,18 @@
 
         <div class="catalog-section">
             <h2>Текущий каталог</h2>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages" style="margin-bottom: 1rem;">
+                        {% for category, message in messages %}
+                            <div class="flash-message flash-{{ category }}" style="padding: 0.75rem; border-radius: 8px; margin-bottom: 0.5rem; text-align: center; background: {% if category == 'error' %}#fee{% elif category == 'success' %}#efe{% elif category == 'warning' %}#ffe{% else %}#eef{% endif %}; color: {% if category == 'error' %}#c00{% elif category == 'success' %}#0a0{% elif category == 'warning' %}#a60{% else %}#06a{% endif %};">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
 
             {% if bouquets %}
             <table class="bouquet-table">
@@ -274,8 +288,8 @@
                     {% for bouquet in bouquets %}
                     <tr>
                         <td>
-                            {% if bouquet.image_url %}
-                            <img src="{{ bouquet.image_url }}" alt="{{ bouquet.name }}" class="bouquet-thumbnail">
+                            {% if bouquet.image_file %}
+                            <img src="{{ url_for('static', filename='uploads/' + bouquet.image_file) }}" alt="{{ bouquet.name }}" class="bouquet-thumbnail">
                             {% else %}
                             <div class="bouquet-thumbnail" style="display: flex; align-items: center; justify-content: center; color: #999;">
                                 🌺
@@ -302,6 +316,7 @@
 
     <footer>
         <p>&copy; 2024 Цветочный магазин "Флора". Все права защищены.</p>
+        <p style="margin-top: 0.5rem;"><a href="/logout" style="color: white; text-decoration: underline;">Выйти из админ-панели</a></p>
     </footer>
 </body>
 </html>
