@@ -40,6 +40,18 @@ def create_app():
         category_roses = db.Column(db.Boolean, default=True)     # Розы
         category_tulips = db.Column(db.Boolean, default=True)    # Тюльпаны
         category_violets = db.Column(db.Boolean, default=True)   # Фиалки
+        category_peonies = db.Column(db.Boolean, default=True)   # Пионы
+        category_carnations = db.Column(db.Boolean, default=True) # Гвоздики
+        category_chrysanthemums = db.Column(db.Boolean, default=True) # Хризантемы
+        category_lilies = db.Column(db.Boolean, default=True)    # Лилии
+        category_orchids = db.Column(db.Boolean, default=True)   # Орхидеи
+        category_daisies = db.Column(db.Boolean, default=True)   # Ромашки
+        category_eustoma = db.Column(db.Boolean, default=True)   # Эустомы
+        category_alstroemeria = db.Column(db.Boolean, default=True) # Альстромерии
+        category_gerberas = db.Column(db.Boolean, default=True)  # Герберы
+        category_irises = db.Column(db.Boolean, default=True)    # Ирисы
+        category_narcissus = db.Column(db.Boolean, default=True) # Нарциссы
+        category_mixed = db.Column(db.Boolean, default=True)     # Сборные букеты
         
         # Кому дарить
         gift_grandma = db.Column(db.Boolean, default=True)    # Бабушке
@@ -171,6 +183,18 @@ def create_app():
                 category_roses = request.form.get('category_roses') == 'on'
                 category_tulips = request.form.get('category_tulips') == 'on'
                 category_violets = request.form.get('category_violets') == 'on'
+                category_peonies = request.form.get('category_peonies') == 'on'
+                category_carnations = request.form.get('category_carnations') == 'on'
+                category_chrysanthemums = request.form.get('category_chrysanthemums') == 'on'
+                category_lilies = request.form.get('category_lilies') == 'on'
+                category_orchids = request.form.get('category_orchids') == 'on'
+                category_daisies = request.form.get('category_daisies') == 'on'
+                category_eustoma = request.form.get('category_eustoma') == 'on'
+                category_alstroemeria = request.form.get('category_alstroemeria') == 'on'
+                category_gerberas = request.form.get('category_gerberas') == 'on'
+                category_irises = request.form.get('category_irises') == 'on'
+                category_narcissus = request.form.get('category_narcissus') == 'on'
+                category_mixed = request.form.get('category_mixed') == 'on'
                 
                 # Получаем значения чекбоксов "кому дарить"
                 gift_grandma = request.form.get('gift_grandma') == 'on'
@@ -195,6 +219,18 @@ def create_app():
                     category_roses=category_roses,
                     category_tulips=category_tulips,
                     category_violets=category_violets,
+                    category_peonies=category_peonies,
+                    category_carnations=category_carnations,
+                    category_chrysanthemums=category_chrysanthemums,
+                    category_lilies=category_lilies,
+                    category_orchids=category_orchids,
+                    category_daisies=category_daisies,
+                    category_eustoma=category_eustoma,
+                    category_alstroemeria=category_alstroemeria,
+                    category_gerberas=category_gerberas,
+                    category_irises=category_irises,
+                    category_narcissus=category_narcissus,
+                    category_mixed=category_mixed,
                     gift_grandma=gift_grandma,
                     gift_girlfriend=gift_girlfriend,
                     gift_wife=gift_wife,
