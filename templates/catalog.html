@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог цветов - Эка цветы</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6b5b95;
+            --secondary-color: #88b04b;
+            --accent-color: #f7cac9;
+            --text-color: #333;
+            --light-bg: #f9f9f9;
+            --white: #ffffff;
+            --border-radius: 16px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            background: linear-gradient(135deg, var(--primary-color), #9a7fb5);
+            color: white;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .header-top .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-main {
+            padding: 1.5rem 0;
+        }
+
+        .header-main .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .logo-icon {
+            font-size: 3rem;
+        }
+
+        .logo-text h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1.2;
+        }
+
+        .logo-text p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        nav {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: color 0.3s;
+            padding: 0.5rem 0;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--primary-color);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active::after {
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Page Title */
+        .page-title {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 3rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-title h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-title p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Catalog Layout */
+        .catalog-wrapper {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Sidebar Filters */
+        .sidebar-filters {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .filter-section {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .filter-section:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .filter-section h3 {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: background 0.3s;
+        }
+
+        .filter-option:hover {
+            background: #f5f5f5;
+        }
+
+        .filter-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 0.95rem;
+        }
+
+        .price-inputs {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .price-inputs input {
+            width: 100%;
+            padding: 0.6rem;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .price-inputs span {
+            color: #666;
+        }
+
+        .filter-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .btn-apply {
+            background: linear-gradient(135deg, var(--primary-color), #9a7fb5);
+            color: white;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(107, 91, 149, 0.4);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            color: white;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-reset:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 154, 158, 0.4);
+        }
+
+        /* Main Content */
+        .catalog-main {
+            min-width: 0;
+        }
+
+        /* Active Filters Bar */
+        .active-filters-bar {
+            background: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .active-filters-bar strong {
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+        }
+
+        .filter-tag {
+            background: linear-gradient(135deg, var(--primary-color), #9a7fb5);
+            color: white;
+            padding: 0.375rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-tag .remove-filter {
+            cursor: pointer;
+            font-size: 1.1rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .filter-tag .remove-filter:hover {
+            opacity: 1;
+        }
+
+        /* Products Grid */
+        .products-count {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .bouquet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .bouquet-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 420px;
+        }
+
+        .bouquet-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .bouquet-image {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            flex-shrink: 0;
+        }
+
+        .bouquet-info {
+            padding: 1.25rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .bouquet-name {
+            font-size: 1.2rem;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .bouquet-price {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            flex-shrink: 0;
+        }
+
+        .bouquet-description {
+            color: #666;
+            line-height: 1.5;
+            font-size: 0.9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            max-width: 700px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2.5rem;
+            color: #333;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.3s;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--primary-color);
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .modal-placeholder {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            color: #999;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .modal-body {
+            padding: 2.5rem;
+        }
+
+        .modal-name {
+            font-size: 2.2rem;
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .modal-price {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-description {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            white-space: pre-wrap;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), #9a7fb5);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        footer a:hover {
+            color: var(--accent-color);
+        }
+
+        .no-bouquets {
+            text-align: center;
+            color: #666;
+            font-size: 1.3rem;
+            padding: 4rem 2rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .catalog-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar-filters {
+                position: static;
+                margin-bottom: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-main .container {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 1rem;
+            }
+
+            .page-title h1 {
+                font-size: 1.8rem;
+            }
+
+            .bouquet-grid {
+                grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+                gap: 1rem;
+            }
+
+            .bouquet-card {
+                height: 380px;
+            }
+
+            .bouquet-image {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .bouquet-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <div class="container">
+                <span>📍 г. Гал, ул около стадиона</span>
+                <span>📞 +79407735214</span>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <a href="/" class="logo">
+                    <span class="logo-icon">🌸</span>
+                    <div class="logo-text">
+                        <h1>Эка цветы</h1>
+                        <p>Цветочный магазин в Гале</p>
+                    </div>
+                </a>
+                <nav>
+                    <a href="/">Главная</a>
+                    <a href="/catalog" class="active">Каталог</a>
+                    <a href="/#contacts">Контакты</a>
+                    <a href="/login">Админ</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <section class="page-title">
+        <div class="container">
+            <h1>🌺 Каталог цветов</h1>
+            <p>Выбирайте самые красивые букеты для ваших близких</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="catalog-wrapper">
+            <!-- Sidebar Filters -->
+            <aside class="sidebar-filters">
+                <form id="filterForm" method="GET" action="/catalog">
+                    <!-- Categories -->
+                    <div class="filter-section">
+                        <h3>🌸 Категории</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_bouquets" name="category" value="bouquets" {% if active_category == 'bouquets' %}checked{% endif %}>
+                            <label for="cat_bouquets">Букеты цветов</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_baskets" name="category" value="baskets" {% if active_category == 'baskets' %}checked{% endif %}>
+                            <label for="cat_baskets">Цветы в корзинках</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_live" name="category" value="live" {% if active_category == 'live' %}checked{% endif %}>
+                            <label for="cat_live">Живые цветы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_roses" name="category" value="roses" {% if active_category == 'roses' %}checked{% endif %}>
+                            <label for="cat_roses">Розы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_tulips" name="category" value="tulips" {% if active_category == 'tulips' %}checked{% endif %}>
+                            <label for="cat_tulips">Тюльпаны</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_violets" name="category" value="violets" {% if active_category == 'violets' %}checked{% endif %}>
+                            <label for="cat_violets">Фиалки</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_peonies" name="category" value="peonies" {% if active_category == 'peonies' %}checked{% endif %}>
+                            <label for="cat_peonies">Пионы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_carnations" name="category" value="carnations" {% if active_category == 'carnations' %}checked{% endif %}>
+                            <label for="cat_carnations">Гвоздики</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_chrysanthemums" name="category" value="chrysanthemums" {% if active_category == 'chrysanthemums' %}checked{% endif %}>
+                            <label for="cat_chrysanthemums">Хризантемы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_lilies" name="category" value="lilies" {% if active_category == 'lilies' %}checked{% endif %}>
+                            <label for="cat_lilies">Лилии</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_orchids" name="category" value="orchids" {% if active_category == 'orchids' %}checked{% endif %}>
+                            <label for="cat_orchids">Орхидеи</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_daisies" name="category" value="daisies" {% if active_category == 'daisies' %}checked{% endif %}>
+                            <label for="cat_daisies">Ромашки</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_eustoma" name="category" value="eustoma" {% if active_category == 'eustoma' %}checked{% endif %}>
+                            <label for="cat_eustoma">Эустомы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_alstroemeria" name="category" value="alstroemeria" {% if active_category == 'alstroemeria' %}checked{% endif %}>
+                            <label for="cat_alstroemeria">Альстромерии</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_gerberas" name="category" value="gerberas" {% if active_category == 'gerberas' %}checked{% endif %}>
+                            <label for="cat_gerberas">Герберы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_irises" name="category" value="irises" {% if active_category == 'irises' %}checked{% endif %}>
+                            <label for="cat_irises">Ирисы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_narcissus" name="category" value="narcissus" {% if active_category == 'narcissus' %}checked{% endif %}>
+                            <label for="cat_narcissus">Нарциссы</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="cat_mixed" name="category" value="mixed" {% if active_category == 'mixed' %}checked{% endif %}>
+                            <label for="cat_mixed">Сборные букеты</label>
+                        </div>
+                    </div>
+
+                    <!-- Кому дарить -->
+                    <div class="filter-section">
+                        <h3>🎁 Кому дарить</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="gift_grandma" name="gift" value="grandma" {% if active_gift == 'grandma' %}checked{% endif %}>
+                            <label for="gift_grandma">Бабушке</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="gift_girlfriend" name="gift" value="girlfriend" {% if active_gift == 'girlfriend' %}checked{% endif %}>
+                            <label for="gift_girlfriend">Девушке</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="gift_wife" name="gift" value="wife" {% if active_gift == 'wife' %}checked{% endif %}>
+                            <label for="gift_wife">Жене</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="gift_mom" name="gift" value="mom" {% if active_gift == 'mom' %}checked{% endif %}>
+                            <label for="gift_mom">Маме</label>
+                        </div>
+                    </div>
+
+                    <!-- Праздники -->
+                    <div class="filter-section">
+                        <h3>🎉 Праздник</h3>
+                        <div class="filter-option">
+                            <input type="checkbox" id="holiday_march8" name="holiday" value="march8" {% if active_holiday == 'march8' %}checked{% endif %}>
+                            <label for="holiday_march8">8 марта</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="holiday_feb14" name="holiday" value="feb14" {% if active_holiday == 'feb14' %}checked{% endif %}>
+                            <label for="holiday_feb14">14 февраля</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="holiday_cheer" name="holiday" value="cheer" {% if active_holiday == 'cheer' %}checked{% endif %}>
+                            <label for="holiday_cheer">Порадовать</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="holiday_just" name="holiday" value="just" {% if active_holiday == 'just' %}checked{% endif %}>
+                            <label for="holiday_just">Просто так</label>
+                        </div>
+                    </div>
+
+                    <!-- Цена -->
+                    <div class="filter-section">
+                        <h3>💰 Цена (₽)</h3>
+                        <div class="price-inputs">
+                            <input type="number" name="price_min" placeholder="От" value="{{ price_min or '' }}" min="0">
+                            <span>—</span>
+                            <input type="number" name="price_max" placeholder="До" value="{{ price_max or '' }}" min="0">
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="filter-actions">
+                        <button type="submit" class="btn-apply">Применить фильтры</button>
+                        <a href="/catalog" class="btn-reset">Сбросить всё</a>
+                    </div>
+                </form>
+            </aside>
+
+            <!-- Main Catalog Area -->
+            <main class="catalog-main">
+                <!-- Active Filters Bar -->
+                {% if active_category or active_gift or active_holiday or price_min or price_max %}
+                <div class="active-filters-bar">
+                    <strong>Активные фильтры:</strong>
+                    {% if active_category %}
+                    <span class="filter-tag">
+                        🌸 {{ get_category_name(active_category) }}
+                        <span class="remove-filter" onclick="removeFilter('category')">×</span>
+                    </span>
+                    {% endif %}
+                    {% if active_gift %}
+                    <span class="filter-tag">
+                        🎁 {{ get_gift_name(active_gift) }}
+                        <span class="remove-filter" onclick="removeFilter('gift')">×</span>
+                    </span>
+                    {% endif %}
+                    {% if active_holiday %}
+                    <span class="filter-tag">
+                        🎉 {{ get_holiday_name(active_holiday) }}
+                        <span class="remove-filter" onclick="removeFilter('holiday')">×</span>
+                    </span>
+                    {% endif %}
+                    {% if price_min %}
+                    <span class="filter-tag">
+                        💰 От {{ price_min }}₽
+                        <span class="remove-filter" onclick="removeFilter('price_min')">×</span>
+                    </span>
+                    {% endif %}
+                    {% if price_max %}
+                    <span class="filter-tag">
+                        💰 До {{ price_max }}₽
+                        <span class="remove-filter" onclick="removeFilter('price_max')">×</span>
+                    </span>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                <!-- Products Count -->
+                <p class="products-count">Найдено букетов: {{ bouquets|length }}</p>
+
+                <!-- Bouquet Grid -->
+                <div class="bouquet-grid">
+                    {% for bouquet in bouquets %}
+                    <div class="bouquet-card" onclick="openModal({{ bouquet.id }}, '{{ bouquet.name }}', {{ bouquet.price }}, '{{ bouquet.description or '' }}', '{{ bouquet.image_file or '' }}')">
+                        {% if bouquet.image_file %}
+                        <img src="{{ url_for('static', filename='uploads/' + bouquet.image_file) }}" alt="{{ bouquet.name }}" class="bouquet-image">
+                        {% else %}
+                        <div class="bouquet-image" style="display: flex; align-items: center; justify-content: center; font-size: 4rem; color: #ccc;">🌸</div>
+                        {% endif %}
+                        <div class="bouquet-info">
+                            <h3 class="bouquet-name">{{ bouquet.name }}</h3>
+                            <div class="bouquet-price">{{ "%.0f"|format(bouquet.price) }} ₽</div>
+                            <p class="bouquet-description">{{ bouquet.description or 'Красивый букет для ваших близких' }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if bouquets|length == 0 %}
+                <div class="no-bouquets">
+                    <p>😔 По выбранным фильтрам ничего не найдено</p>
+                    <p style="margin-top: 1rem;">Попробуйте изменить параметры поиска</p>
+                </div>
+                {% endif %}
+            </main>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="bouquetModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <div id="modalImageContainer"></div>
+            <div class="modal-body">
+                <h2 id="modalName" class="modal-name"></h2>
+                <div id="modalPrice" class="modal-price"></div>
+                <p id="modalDescription" class="modal-description"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Цветочный магазин "Эка цветы"</p>
+        <p>📍 г. Гал, ул около стадиона | 📞 +79407735214</p>
+        <p>📷 <a href="https://www.instagram.com/ekaqobali23" target="_blank">@ekaqobali23</a></p>
+    </footer>
+
+    <script>
+        // Modal functions
+        function openModal(id, name, price, description, imageFile) {
+            document.getElementById('modalName').textContent = name;
+            document.getElementById('modalPrice').textContent = price + ' ₽';
+            document.getElementById('modalDescription').textContent = description || 'Красивый букет для ваших близких';
+            
+            const imageContainer = document.getElementById('modalImageContainer');
+            if (imageFile) {
+                imageContainer.innerHTML = '<img src="/static/uploads/' + imageFile + '" alt="' + name + '" class="modal-image">';
+            } else {
+                imageContainer.innerHTML = '<div class="modal-placeholder">🌸</div>';
+            }
+            
+            document.getElementById('bouquetModal').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('bouquetModal').classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            const modal = document.getElementById('bouquetModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Remove filter helper
+        function removeFilter(type) {
+            const url = new URL(window.location.href);
+            if (type === 'category') {
+                url.searchParams.delete('category');
+            } else if (type === 'gift') {
+                url.searchParams.delete('gift');
+            } else if (type === 'holiday') {
+                url.searchParams.delete('holiday');
+            } else if (type === 'price_min') {
+                url.searchParams.delete('price_min');
+            } else if (type === 'price_max') {
+                url.searchParams.delete('price_max');
+            }
+            window.location.href = url.toString();
+        }
+    </script>
+</body>
+</html>

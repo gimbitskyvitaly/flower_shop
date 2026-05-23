@@ -119,6 +119,95 @@ def create_app():
                              price_min=price_min,
                              price_max=price_max)
 
+    # Страница каталога с фильтрами
+    @app.route('/catalog')
+    def catalog():
+        # Получаем параметры фильтрации из URL
+        category_filter = request.args.get('category')  # фильтр по категории
+        price_min = request.args.get('price_min', type=float)  # минимальная цена
+        price_max = request.args.get('price_max', type=float)  # максимальная цена
+        gift_filter = request.args.get('gift')  # кому дарить
+        holiday_filter = request.args.get('holiday')  # праздник
+        
+        # Базовый запрос
+        query = Bouquet.query
+        
+        # Применяем фильтры
+        if category_filter:
+            category_column = f'category_{category_filter}'
+            if hasattr(Bouquet, category_column):
+                query = query.filter(getattr(Bouquet, category_column) == True)
+        
+        if price_min is not None:
+            query = query.filter(Bouquet.price >= price_min)
+        
+        if price_max is not None:
+            query = query.filter(Bouquet.price <= price_max)
+        
+        if gift_filter:
+            gift_column = f'gift_{gift_filter}'
+            if hasattr(Bouquet, gift_column):
+                query = query.filter(getattr(Bouquet, gift_column) == True)
+        
+        if holiday_filter:
+            holiday_column = f'holiday_{holiday_filter}'
+            if hasattr(Bouquet, holiday_column):
+                query = query.filter(getattr(Bouquet, holiday_column) == True)
+        
+        bouquets = query.all()
+        
+        # Функции для получения названий фильтров
+        def get_category_name(cat):
+            names = {
+                'bouquets': 'Букеты цветов',
+                'baskets': 'Цветы в корзинках',
+                'live': 'Живые цветы',
+                'roses': 'Розы',
+                'tulips': 'Тюльпаны',
+                'violets': 'Фиалки',
+                'peonies': 'Пионы',
+                'carnations': 'Гвоздики',
+                'chrysanthemums': 'Хризантемы',
+                'lilies': 'Лилии',
+                'orchids': 'Орхидеи',
+                'daisies': 'Ромашки',
+                'eustoma': 'Эустомы',
+                'alstroemeria': 'Альстромерии',
+                'gerberas': 'Герберы',
+                'irises': 'Ирисы',
+                'narcissus': 'Нарциссы',
+                'mixed': 'Сборные букеты'
+            }
+            return names.get(cat, cat)
+        
+        def get_gift_name(gift):
+            names = {
+                'grandma': 'Бабушке',
+                'girlfriend': 'Девушке',
+                'wife': 'Жене',
+                'mom': 'Маме'
+            }
+            return names.get(gift, gift)
+        
+        def get_holiday_name(holiday):
+            names = {
+                'march8': '8 марта',
+                'feb14': '14 февраля',
+                'cheer': 'Порадовать',
+                'just': 'Просто так'
+            }
+            return names.get(holiday, holiday)
+        
+        return render_template('catalog.html', bouquets=bouquets, 
+                             active_category=category_filter,
+                             active_gift=gift_filter,
+                             active_holiday=holiday_filter,
+                             price_min=price_min,
+                             price_max=price_max,
+                             get_category_name=get_category_name,
+                             get_gift_name=get_gift_name,
+                             get_holiday_name=get_holiday_name)
+
     # Страница входа для администратора
     @app.route('/login', methods=['GET', 'POST'])
     def login():
