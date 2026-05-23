@@ -80,6 +80,10 @@
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            height: 450px;
         }
 
         .bouquet-card:hover {
@@ -92,16 +96,22 @@
             height: 250px;
             object-fit: cover;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            flex-shrink: 0;
         }
 
         .bouquet-info {
             padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         .bouquet-name {
             font-size: 1.3rem;
             color: #333;
             margin-bottom: 0.5rem;
+            flex-shrink: 0;
         }
 
         .bouquet-price {
@@ -109,12 +119,116 @@
             color: #667eea;
             font-weight: bold;
             margin-bottom: 0.5rem;
+            flex-shrink: 0;
         }
 
         .bouquet-description {
             color: #666;
             line-height: 1.5;
             font-size: 0.95rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal.show {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #333;
+            cursor: pointer;
+            z-index: 10;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: #667eea;
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 350px;
+            object-fit: cover;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-placeholder {
+            width: 100%;
+            height: 350px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #999;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-name {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .modal-price {
+            font-size: 2rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-description {
+            color: #666;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            white-space: pre-wrap;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .contact-section {
@@ -181,7 +295,7 @@
         {% if bouquets %}
         <div class="bouquet-grid">
             {% for bouquet in bouquets %}
-            <div class="bouquet-card">
+            <div class="bouquet-card" onclick="openModal({{ loop.index0 }})">
                 {% if bouquet.image_file %}
                 <img src="{{ url_for('static', filename='uploads/' + bouquet.image_file) }}" alt="{{ bouquet.name }}" class="bouquet-image">
                 {% else %}
@@ -199,6 +313,73 @@
             </div>
             {% endfor %}
         </div>
+
+        <!-- Modal for bouquet details -->
+        <div id="bouquetModal" class="modal" onclick="closeModal(event)">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeModalDirect()">&times;</span>
+                <div id="modalImageContainer"></div>
+                <div class="modal-body">
+                    <h2 id="modalName" class="modal-name"></h2>
+                    <div id="modalPrice" class="modal-price"></div>
+                    <p id="modalDescription" class="modal-description"></p>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            const bouquetsData = [
+                {% for bouquet in bouquets %}
+                {
+                    name: "{{ bouquet.name | replace('"', '\\"') }}",
+                    price: {{ bouquet.price }},
+                    description: "{{ (bouquet.description or '') | replace('\n', '\\n') | replace('"', '\\"') }}",
+                    image_file: "{{ bouquet.image_file or '' }}"
+                }{% if not loop.last %},{% endif %}
+                {% endfor %}
+            ];
+
+            function openModal(index) {
+                const bouquet = bouquetsData[index];
+                const modal = document.getElementById('bouquetModal');
+                const imageContainer = document.getElementById('modalImageContainer');
+                
+                // Set content
+                document.getElementById('modalName').textContent = bouquet.name;
+                document.getElementById('modalPrice').textContent = bouquet.price + ' ₽';
+                document.getElementById('modalDescription').textContent = bouquet.description;
+                
+                // Set image
+                if (bouquet.image_file) {
+                    imageContainer.innerHTML = '<img src="/static/uploads/' + bouquet.image_file + '" alt="' + bouquet.name + '" class="modal-image">';
+                } else {
+                    imageContainer.innerHTML = '<div class="modal-placeholder">🌺</div>';
+                }
+                
+                // Show modal
+                modal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+
+            function closeModal(event) {
+                if (event.target === document.getElementById('bouquetModal')) {
+                    closeModalDirect();
+                }
+            }
+
+            function closeModalDirect() {
+                const modal = document.getElementById('bouquetModal');
+                modal.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+
+            // Close on Escape key
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    closeModalDirect();
+                }
+            });
+        </script>
         {% else %}
         <div class="no-bouquets">
             <p>В каталоге пока нет букетов</p>
